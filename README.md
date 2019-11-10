@@ -30,7 +30,7 @@ $ ./build/main example.txt
 Also, the command accepts inputs from stdin
 
 ```
-$ cat "one + two" | ./build/main -
+$ echo "one + two" | ./build/main -
 3
 ```
 
