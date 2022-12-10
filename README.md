@@ -27,7 +27,7 @@ $ brew link bison
 After setup is done, you can clone the repository and build the project to make sure everything works. The following will build the project in a temporary `build/` directory which is strongly advised since bison/flex will generate artifacts that may pollute your VCS.
 
 ```
-$ git clone https://github.com/ryaneverett33/flex-bison-skeleton
+$ git clone git@github.com:ryaneverett33/flex-bison-skeleton.git
 $ cd flex-bison-calc
 $ # make a build directory to build the project in
 $ mkdir build
