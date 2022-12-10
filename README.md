@@ -1,39 +1,56 @@
-flex-bison-calc
+flex-bison-skeleton
 ----
-An implementation of the C++ calculator with flex and bison presented in the official tutorial [1].
+A small sample app (based on the official tutorial) for Flex/Bison to use as a skeleton for projects. For more info on using Flex/Bison, and for a more comprehensive example, see the parent repo at [Ktakuya332C/flex-bison-calc](https://github.com/Ktakuya332C/flex-bison-calc) and the official [Bison docs](https://www.gnu.org/software/bison/manual/html_node/Examples.html).
 
 ## Setup
-Install flex and bison [2]
 
-```
+This skeleton is built using CMake, see the [docs](https://cmake.org/install/) for how to install it for your platform.
+
+### Setup - macOS
+
+The versions of flex and bison that are distributed with Xcode are too old, so we need to install newer versions with [homebrew](https://brew.sh/).
+
+```sh
 $ brew install flex
 $ brew install bison
 ```
 
-Then, clone this repository and compile
+Once they're installed, we need to `link` them through homebrew so that CMake can find them more easily:
+
+```sh
+$ brew link flex
+$ brew link bison
+```
+
+## Building
+
+After setup is done, you can clone the repository and build the project to make sure everything works. The following will build the project in a temporary `build/` directory which is strongly advised since bison/flex will generate artifacts that may pollute your VCS.
 
 ```
-$ git clone https://github.com/Ktakuya332C/flex-bison-calc.git
+$ git clone https://github.com/ryaneverett33/flex-bison-skeleton
 $ cd flex-bison-calc
-$ make
+$ # make a build directory to build the project in
+$ mkdir build
+$ cmake ../
+$ cmake --build .
 ```
+
+The resultant binary should be found at `build/Calculator`.
 
 ## Usage
-This repository provides one command line tool `build/main`.
-The tool accepts inputs from a file and output the result of calaculation as
 
-```
-$ ./build/main example.txt
+You can verify the example works by supplying inputs to the built `Calculator` binary. A sample file has been included in [example.txt](example.txt). 
+
+NOTE: The functionality of the sample app has been reduced significantly so things like variables aren't supported anymore.
+
+```sh
+$ ./build/Calculator example.txt
 49
 ```
 
-Also, the command accepts inputs from stdin
+The sample also accepts input from standard in:
 
-```
-$ echo "one + two" | ./build/main -
+```sh
+$ echo "1 + 2" | ./build/Calculator -
 3
 ```
-
-## References
-1. https://www.gnu.org/software/bison/manual/html_node/A-Complete-C_002b_002b-Example.html
-2. http://www.jonathanbeard.io/tutorials/FlexBisonC++

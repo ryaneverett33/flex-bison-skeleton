@@ -8,10 +8,10 @@
 
 %code requires {
 #include <string>
-class driver;
+class Driver;
 }
 
-%param { driver& drv }
+%param { Driver& drv }
 
 %locations
 
@@ -19,21 +19,19 @@ class driver;
 %define parse.error verbose
 
 %code {
-#include "driver.hh"
+#include "driver.h"
+#include <iostream>
+#include <string>
 }
 
 %define api.token.prefix {TOK_}
 %token
   END 0 "end of file"
-  ASSIGN ":="
   MINUS "-"
   PLUS "+"
   STAR "*"
   SLASH "/"
-  LPAREN "("
-  RPAREN ")"
 ;
-%token <std::string> IDENTIFIER "identifier"
 %token <int> NUMBER "number"
 %type <int> exp
 
@@ -42,27 +40,19 @@ class driver;
 %%
 
 %start unit;
-unit: assignments exp { drv.result = $2; }
-  ;
-
-assignments: %empty {}
-  | assignments assignment {}
-  ;
-
-assignment:
-  "identifier" ":=" exp { drv.variables[$1] = $3; }
+unit: exp { 
+            drv.result = $1; 
+}
   ;
 
 %left "+" "-";
 %left "*" "/";
 
 exp: "number"
-  | "identifier" { $$ = drv.variables[$1]; }
   | exp "+" exp { $$ = $1 + $3; }
   | exp "-" exp { $$ = $1 - $3; }
   | exp "*" exp { $$ = $1 * $3; }
   | exp "/" exp { $$ = $1 / $3; }
-  | "(" exp ")" { $$ = $2; }
   ;
 
 %%

@@ -4,14 +4,14 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-#include "driver.hh"
-#include "parser.hh"
+#include "driver.h"
+#include "parser.h"
 %}
 
 %option noyywrap
 %option nounput noinput
 %option batch
-%option debug
+/*%option debug*/
 
 %{
 yy::parser::symbol_type make_NUMBER(
@@ -40,12 +40,8 @@ loc.step();
 "+" return yy::parser::make_PLUS(loc);
 "*" return yy::parser::make_STAR(loc);
 "/" return yy::parser::make_SLASH(loc);
-"(" return yy::parser::make_LPAREN(loc);
-")" return yy::parser::make_RPAREN(loc);
-":=" return yy::parser::make_ASSIGN(loc);
 
 {int} return make_NUMBER(yytext, loc);
-{id} return yy::parser::make_IDENTIFIER(yytext, loc);
 . {
   throw yy::parser::syntax_error(
     loc, "invalid character: " + std::string(yytext));
@@ -63,8 +59,7 @@ yy::parser::symbol_type make_NUMBER(
   return yy::parser::make_NUMBER((int)n, loc);
 }
 
-void driver::scan_begin() {
-  yy_flex_debug = trace_scanning;
+void Driver::scan_begin() {
   if (file.empty() || file == "-") {
     yyin = stdin;
   } else if (!(yyin = fopen(file.c_str(), "r"))) {
@@ -73,6 +68,6 @@ void driver::scan_begin() {
   }
 }
 
-void driver::scan_end() {
+void Driver::scan_end() {
   fclose(yyin);
 }

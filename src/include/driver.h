@@ -3,23 +3,20 @@
 
 #include <string>
 #include <map>
-#include "parser.hh"
+#include "parser.h"
 
 #define YY_DECL \
-  yy::parser::symbol_type yylex (driver& drv)
+  yy::parser::symbol_type yylex (Driver& drv)
 YY_DECL;
 
-class driver {
+class Driver {
  public:
-  driver();
-  std::map<std::string, int> variables;
+  Driver() {}
   int result;
   int parse(const std::string& f);
   std::string file;
-  bool trace_parsing;
   void scan_begin();
   void scan_end();
-  bool trace_scanning;
   yy::location location;
 };
 
