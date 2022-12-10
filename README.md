@@ -22,13 +22,30 @@ $ brew link flex
 $ brew link bison
 ```
 
+### Setup - Linux
+
+Install flex and bison through whatever package manager you have:
+
+Ubuntu/Debian:
+
+```sh
+$ apt install bison
+$ apt install flex 
+```
+
+Alpine/Arch:
+```sh
+$ apk add bison
+$ apk add flex
+```
+
 ## Building
 
 After setup is done, you can clone the repository and build the project to make sure everything works. The following will build the project in a temporary `build/` directory which is strongly advised since bison/flex will generate artifacts that may pollute your VCS.
 
 ```
 $ git clone git@github.com:ryaneverett33/flex-bison-skeleton.git
-$ cd flex-bison-calc
+$ cd flex-bison-skeleton
 $ # make a build directory to build the project in
 $ mkdir build
 $ cmake ../
